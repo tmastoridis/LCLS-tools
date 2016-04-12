@@ -15,9 +15,9 @@ x_guess(1) = x_fitted(1)
 
 F = @(x,xdata)cavity_model([x_guess(1), x(1), x(2)], xdata, wrf);
 x_fitted = lsqcurvefit(F, [x_guess(2), x_guess(3)], xdata, Hc_noise);
+x_fitted = [x_guess(1), x_fitted(1), x_fitted(2)]
 
 F = @(x,xdata)cavity_model(x, xdata, wrf);
-x_fitted = [x_guess(1), x_fitted(1), x_fitted(2)]
 
 figure
 hold on
