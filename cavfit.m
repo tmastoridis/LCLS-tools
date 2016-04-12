@@ -20,10 +20,8 @@ plot(xdata/2/pi, 20*log10(Hc_noise))
 plot(xdata/2/pi, 20*log10(F(x_fitted, xdata)),'-g')
 plot(xdata/2/pi, 20*log10(Hc))
 
-%figure 
-%hold on
-%plot(w/2/pi, 20*log10(Hc))
-%plot(w/2/pi, 20*log10(F(x_fitted, xdata)))
+figure
+plot(xdata/2/pi, F(x_fitted, xdata) ./ Hc)
 
 x_guess
 x_true
