@@ -6,10 +6,10 @@ w = 2*pi*freq_range;
 
 noisegain = 1.5e9;
 
-fo_true = - 1e3;
+wo_true = - 1e3 * 2 * pi;
 QL_true = 4.12e7;
 
-Hc = cavity_model(sys_prm, QL_true, 2*pi*fo_true, w);
+Hc = cavity_model(sys_prm, QL_true, wo_true, w);
 Hc_noise=Hc+noisegain*(randn(size(Hc))+1j*randn(size(Hc)));
 
 % Optimization Options (number of iterations etc)
@@ -24,7 +24,7 @@ x0 = [3e7 -1e4];
 % Use function fit_TF_pi to calculate the error function
 cav_error_wrapper = @(x) cavity_error(sys_prm, x, w, Hc_noise);
 x_final = fminunc(cav_error_wrapper, x0, opts)
-x_error_pct = 100 * ((x_final - [QL_true fo_true]) ./ [QL_true fo_true])
+x_error_pct = 100 * ((x_final - [QL_true wo_true]) ./ [QL_true wo_true])
 
 Hc_final = cavity_model(sys_prm, x_final(1), x_final(2), w);
 
