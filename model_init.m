@@ -4,4 +4,6 @@ sys_prm = struct();
 
 sys_prm.frf = 1.3e9;
 sys_prm.wrf = 2*pi*sys_prm.frf;
-sys_prm.r_Q = 1036;
+
+sys_prm.cavity = struct();
+sys_prm.cavity.r_Q = 1036;
