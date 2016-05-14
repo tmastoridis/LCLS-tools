@@ -1,5 +1,5 @@
-function Hc = cavity_model(sys_prm, QL, dw, w)
-% dw = wo - wr
+function Hc = cavity_model(sys_prm, QL, dw, Gn, w)
+% dw = wo - wr, Gn = gain
 
 % Cavity Parameters
 fo = sys_prm.frf;
@@ -11,4 +11,4 @@ RL = 0.5*sys_prm.cavity.r_Q*QL;
 s = 1j*w;
 
 % Cavity transfer function
-Hc = wo*RL/2/QL * (s+wo/2/QL + 1j*dw)./(s.^2 + wo/QL*s +(wo/2/QL)^2 + dw^2); 
+Hc = Gn * (wo*RL/2/QL * (s+wo/2/QL + 1j*dw)./(s.^2 + wo/QL*s +(wo/2/QL)^2 + dw^2));
