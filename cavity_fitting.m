@@ -1,14 +1,11 @@
-clear all; close all; format long;
+function [dw_final, QL_final, Gn_final] = cavity_fitting(sys_prm, noisegain)
 
-sys_prm = model_init();
 freq_range = -2e4:0.25:2e4;
 w = 2*pi*freq_range;
 
-noisegain = 0.05;
-
-dw_true = - 1e3 * 2 * pi;
-QL_true = 4.12e7;
-Gn_true = 1.0;
+dw_true = sys_prm.cavity.dw_true;
+QL_true = sys_prm.cavity.QL_true;
+Gn_true = sys_prm.cavity.Gn_true;
 
 Hc = cavity_model(sys_prm, QL_true, dw_true, Gn_true, w);
 Hc_noise=Hc.*(1+noisegain*(randn(size(Hc))+1j*randn(size(Hc))));
@@ -48,11 +45,3 @@ opts = optimset(opts,'Display', 'off');
 cav_error_wrapper = @(x) cavity_error(sys_prm, [QL_final, dw_final, x], w, Hc_noise);
 Gn_final = fminunc(cav_error_wrapper, Gn_guess, opts);
 Gn_error = (Gn_final - Gn_true) / Gn_true;
-
-%% PLOTTING OUTPUT
-
-[dw_error, QL_error, Gn_error]
-
-Hc_final = cavity_model(sys_prm, QL_final, dw_final, Gn_final, w);
-figure;
-plot(freq_range, 20*log10(Hc_noise), '-r', freq_range, 20*log10(Hc), '-b', freq_range, 20*log10(Hc_final), '-g');
