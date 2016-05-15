@@ -12,14 +12,12 @@ ideal = cavity_model(sys_prm, sys_prm.cavity.QL_true, sys_prm.cavity.dw_true, sy
 
 %% Generate trial data
 trial_count = 100;
-count_total = 0;
 
 dw_fit = zeros(0, trial_count);
 QL_fit = zeros(0, trial_count);
 Gn_fit = zeros(0, trial_count);
 
 parfor n = 1:trial_count
-    count_total = count_total + 1;
     [dw_fit(n), QL_fit(n), Gn_fit(n)] = cavity_fitting(sys_prm, 0.15);
 end
 
