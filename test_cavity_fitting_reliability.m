@@ -32,7 +32,7 @@ count_dwerr = 0;
 
 for n = 1:trial_count
     err = (([dw_fit(n), QL_fit(n), Gn_fit(n)] - x_true) ./ x_true) * 100.0;
-    if abs(err(1)) > 2.0
+    if abs(err(1)) > 1.0
         count_dwerr = count_dwerr + 1;
         plot(freq_range, 20*log10(cavity_model(sys_prm, QL_fit(n), dw_fit(n), Gn_fit(n), freq_range)), '-r')
     else
