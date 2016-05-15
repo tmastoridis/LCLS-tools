@@ -1,8 +1,9 @@
+% WARNING: THIS FILE PLAYS SOUND WHEN IT FINISHES.
 clear all; close all;
 
 sys_prm = model_init();
-test_noisegain = 0.0:0.010:0.100;
-iters_per_test = 20;
+test_noisegain = 0.0:0.005:0.100;
+iters_per_test = 100;
 
 % True output for the cavity_fitting function
 x_true = [sys_prm.cavity.dw_true, sys_prm.cavity.QL_true, sys_prm.cavity.Gn_true];
@@ -38,3 +39,6 @@ for noise_index = 1:length(test_noisegain)
     QL_error(noise_index) = error_vals(2);
     Gn_error(noise_index) = error_vals(3);
 end
+
+load handel
+sound(y, Fs)

@@ -16,13 +16,15 @@ QL_guess = 3e8;
 dw_guess = -1e4;
 Gn_guess = 1.0;
 
+opts = optimset('Display', 'off');
+
 %% FIRST STEP - wo optimization
 F = @(x,xdata) cavity_model(sys_prm, QL_guess, x, Gn_guess, xdata);
-dw_final = real(lsqcurvefit(F, dw_guess, w, Hc_noise));
+dw_final = real(lsqcurvefit(F, dw_guess, w, Hc_noise, [], [], opts));
 
 %% SECOND STEP - QL optimization
 F = @(x,xdata) cavity_model(sys_prm, x*QL_guess, dw_final, Gn_guess, xdata);
-QL_final = QL_guess * real(lsqcurvefit(F, 1, w, Hc_noise));
+QL_final = QL_guess * real(lsqcurvefit(F, 1, w, Hc_noise, [], [], opts));
 
 %% THIRD STEP - Gain optimization - possibrobably not needed
 Gn_final = 1.0;
