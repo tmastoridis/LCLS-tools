@@ -13,8 +13,8 @@ Hc_noise=Hc.*(1+noisegain*(randn(size(Hc))+1j*randn(size(Hc))));
 %% FIRST STEP - wo optimization
 % Optimization Options (number of iterations etc)
 opts = optimset('TolX', 1e-21, 'TolFun', 1e-21);
-opts = optimset(opts, 'DiffMaxChange', 1e-8, ...
-    'MaxFunEvals', 3e3, 'MaxIter', 2e3);
+opts = optimset(opts, 'DiffMaxChange', 1e-2, ...
+    'MaxFunEvals', 1e5, 'MaxIter', 1e5);
 % Turn 'off' 'iter' at final version (for display purposes only)
 opts = optimset(opts,'Display', 'off');
 
@@ -24,7 +24,7 @@ Gn_guess = 1.0;
 
 cav_error_wrapper = @(x) cavity_error(sys_prm, [QL_guess, x, Gn_guess], w, Hc_noise);
 dw_final = fminunc(cav_error_wrapper, dw_guess, opts);
-dw_error = (dw_final - dw_true) / dw_true;
+%dw_error = (dw_final - dw_true) / dw_true;
 
 %% SECOND STEP - QL optimization
 opts = optimset('TolX', 1e-17, 'TolFun', 1e-17);
@@ -34,14 +34,15 @@ opts = optimset(opts,'Display', 'off');
 
 cav_error_wrapper = @(x) cavity_error(sys_prm, [x, dw_final, Gn_guess], w, Hc_noise);
 QL_final = fminunc(cav_error_wrapper, QL_guess, opts);
-QL_error = (QL_final - QL_true) / QL_true;
+%QL_error = (QL_final - QL_true) / QL_true;
 
 %% THIRD STEP - Gain optimization
-opts = optimset('TolX', 1e-15, 'TolFun', 1e-15);
-opts = optimset(opts, 'DiffMaxChange', 1e-5, ...
-    'MaxFunEvals', 3e3, 'MaxIter', 1e3);
-opts = optimset(opts,'Display', 'off');
+%opts = optimset('TolX', 1e-15, 'TolFun', 1e-15);
+%opts = optimset(opts, 'DiffMaxChange', 1e-5, ...
+%    'MaxFunEvals', 3e3, 'MaxIter', 1e3);
+%opts = optimset(opts,'Display', 'off');
 
-cav_error_wrapper = @(x) cavity_error(sys_prm, [QL_final, dw_final, x], w, Hc_noise);
-Gn_final = fminunc(cav_error_wrapper, Gn_guess, opts);
-Gn_error = (Gn_final - Gn_true) / Gn_true;
+%cav_error_wrapper = @(x) cavity_error(sys_prm, [QL_final, dw_final, x], w, Hc_noise);
+%Gn_final = fminunc(cav_error_wrapper, Gn_guess, opts);
+%Gn_error = (Gn_final - Gn_true) / Gn_true;
+Gn_final = 1.0;
