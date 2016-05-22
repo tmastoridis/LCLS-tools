@@ -1,4 +1,4 @@
-function Hc = cavity_model(sys_prm, QL, dw, Gn, w)
+function Hc = cavity_model(sys_prm, dw, QL, Gn, w)
 % dw = wo - wr, Gn = gain
 
 % Cavity Parameters

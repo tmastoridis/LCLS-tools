@@ -8,7 +8,7 @@ end
 
 x_true = [sys_prm.cavity.dw_true, sys_prm.cavity.QL_true, sys_prm.cavity.Gn_true];
 freq_range = -2e4:0.25:2e4;
-ideal = cavity_model(sys_prm, sys_prm.cavity.QL_true, sys_prm.cavity.dw_true, sys_prm.cavity.Gn_true, freq_range);
+ideal = cavity_model(sys_prm, sys_prm.cavity.dw_true, sys_prm.cavity.QL_true, ys_prm.cavity.Gn_true, freq_range);
 
 %% Generate trial data
 trial_count = 100;
